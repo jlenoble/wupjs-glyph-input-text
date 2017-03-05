@@ -1,0 +1,19 @@
+{
+  "generator-wupjs": {
+    "module": "wupjs-glyph-input-text",
+    "description": "Generic input[text] using React",
+    "author": "Jason Lenoble",
+    "email": "jason.lenoble@gmail.com",
+    "github": "jlenoble",
+    "license": "MIT",
+    "transpile": "es2017",
+    "addons": [
+      "React",
+      "Enzyme"
+    ],
+    "Class": "WupjsGlyphInputText",
+    "updated": 2017,
+    "created": 2017,
+    "year": "2017"
+  }
+}
