@@ -1,7 +1,7 @@
 {
   "name": "wupjs-glyph-input-text",
   "version": "0.0.0",
-  "description": "Generic input[text] using React",
+  "description": "Generic input[type=\"text\"] using React",
   "main": "lib/index.js",
   "scripts": {
     "test": "gulp test"
