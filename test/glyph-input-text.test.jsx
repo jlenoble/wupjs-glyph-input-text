@@ -1,5 +1,5 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import {shallow, mount} from 'enzyme';
 import {expect} from 'chai';
 import GlyphInputText from '../src/glyph-input-text';
 
@@ -171,6 +171,32 @@ describe('Testing <GlyphInputText/>', function () {
     expect(nClicks).to.equal(1);
     wrapper.simulate('submit');
     expect(nClicks).to.equal(2);
+  });
+
+  it(`<GlyphInputText/> can be submitted and text recovered`, function () {
+    const refs = {};
+    let text = '';
+
+    const wrapper = mount(
+      <GlyphInputText
+        glyph="pencil"
+        onSubmit={e => {
+          e.preventDefault();
+          text = refs.inputNode.value.trim();
+        }}
+        exposeInputNode={node => {
+          refs.inputNode = node;
+        }}
+      />
+    );
+
+    wrapper.simulate('submit');
+    expect(text).to.equal('');
+
+    refs.inputNode.value = 'new value';
+    expect(text).to.equal('');
+    wrapper.simulate('submit');
+    expect(text).to.equal('new value');
   });
 
   it(`<GlyphInputText/> with no onSubmit prop does nothing`, function () {
