@@ -1,3 +1,1 @@
-import WupjsGlyphInputText from './wupjs-glyph-input-text';
-
-export default WupjsGlyphInputText;
+export {default as GlyphInputText} from './glyph-input-text';
