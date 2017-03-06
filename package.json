@@ -54,9 +54,12 @@
     "enzyme": "^2.7.1"
   },
   "dependencies": {
+    "classnames": "2.x",
+    "react": "15.x",
+    "react-dom": "15.x"
+  },
+  "peerDependencies": {
     "bootstrap": "^4.0.0-alpha",
-    "classnames": "^2.2.5",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "font-awesome": "4.x"
   }
 }
