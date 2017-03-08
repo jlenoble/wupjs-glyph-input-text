@@ -32,6 +32,7 @@ describe('Testing <GlyphInputText/>', function () {
     const input = wrapper.find('input');
 
     expect(input).to.have.length(1);
+    expect(input).to.have.attr('type', 'text');
     expect(input).to.have.className('form-control');
   });
 
