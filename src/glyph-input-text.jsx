@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 const GlyphInputText = ({
   glyph, placeholder, autoFocus, autoClear, defaultValue,
-  exposeInputNode, onFocus, onSubmit,
+  exposeInputNode, onFocus, onBlur, onSubmit,
   groupBaseClass, groupAddClass, groupButtonBaseClass, groupButtonAddClass,
   inputBaseClass, inputAddClass, buttonBaseClass, buttonAddClass,
   glyphBaseClass, glyphAddClass,
@@ -20,6 +20,7 @@ const GlyphInputText = ({
     <form
       className={classnames(groupBaseClass, groupAddClass)}
       onFocus={onFocus}
+      onBlur={onBlur}
       onSubmit={_onSubmit}
     >
       <input
@@ -50,6 +51,7 @@ GlyphInputText.propTypes = {
   exposeInputNode: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
   placeholder: PropTypes.string,
   autoFocus: PropTypes.bool,
   autoClear: PropTypes.bool,
