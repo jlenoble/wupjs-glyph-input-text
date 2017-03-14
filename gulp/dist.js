@@ -2,10 +2,10 @@ import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 import babel from 'gulp-babel';
 
-import {srcGlob, distDir} from './globs';
+import {distGlob, distDir} from './globs';
 
 export const dist = () => {
-  return gulp.src(srcGlob)
+  return gulp.src(distGlob)
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(babel())

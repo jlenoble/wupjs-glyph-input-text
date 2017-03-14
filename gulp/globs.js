@@ -23,6 +23,7 @@ export const bundleGlob = 'bundle.js';
 export const testBundleGlob = 'test_bundle.js';
 
 export const srcGlob = join(srcDir, ['**/*.js', '**/*.jsx']);
+export const distGlob = srcGlob.concat(['!**/demo.js', '!**/demo.jsx']);
 export const testGlob = join(testDir, ['**/*.test.js', '**/*.test.jsx']);
 export const allTestGlob = join(testDir, ['**/*.js', '**/*.jsx']);
 
