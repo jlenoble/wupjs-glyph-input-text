@@ -158,7 +158,7 @@ describe('Testing <GlyphInputText/>', function () {
 
   it(`<GlyphInputText/> can be submitted`, function () {
     let nClicks = 0;
-    const wrapper = shallow(
+    const wrapper = mount(
       <GlyphInputText
         glyph="pencil"
         onSubmit={() => {
@@ -167,46 +167,53 @@ describe('Testing <GlyphInputText/>', function () {
       />
     );
 
+    const e = {
+      preventDefault () {},
+    };
+
     expect(nClicks).to.equal(0);
-    wrapper.simulate('submit');
+    wrapper.simulate('submit', e);
     expect(nClicks).to.equal(1);
-    wrapper.simulate('submit');
+    wrapper.simulate('submit', e);
     expect(nClicks).to.equal(2);
   });
 
   it(`<GlyphInputText/> can be submitted and text recovered`, function () {
-    const refs = {};
     let text = '';
 
     const wrapper = mount(
       <GlyphInputText
         glyph="pencil"
         onSubmit={e => {
-          e.preventDefault();
-          text = refs.inputNode.value.trim();
-        }}
-        exposeInputNode={node => {
-          refs.inputNode = node;
+          text = e.target.value.trim();
         }}
       />
     );
 
-    wrapper.simulate('submit');
-    expect(text).to.equal('');
+    const e = {
+      preventDefault () {},
+    };
 
-    refs.inputNode.value = 'new value';
+    wrapper.simulate('submit', e);
     expect(text).to.equal('');
-    wrapper.simulate('submit');
+    wrapper.find('input').node.value = 'new value';
+    expect(text).to.equal('');
+    wrapper.simulate('submit', e);
     expect(text).to.equal('new value');
   });
 
-  it(`<GlyphInputText/> with no onSubmit prop does nothing`, function () {
-    const wrapper = shallow(
+  it(`<GlyphInputText/> with no onSubmit prop throws an error on submit`,
+  function () {
+    const wrapper = mount(
       <GlyphInputText
         glyph="pencil"
       />
     );
 
-    expect(wrapper.simulate.bind(wrapper, 'submit')).not.to.throw();
+    const e = {
+      preventDefault () {},
+    };
+
+    expect(wrapper.simulate.bind(wrapper, 'submit', e)).to.throw(TypeError);
   });
 });

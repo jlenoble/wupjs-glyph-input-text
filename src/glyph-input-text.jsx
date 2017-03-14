@@ -3,16 +3,26 @@ import classnames from 'classnames';
 
 const GlyphInputText = ({
   glyph, placeholder, autoFocus, autoClear, defaultValue,
-  exposeInputNode, onFocus, onBlur, onSubmit,
+  onFocus, onBlur, onSubmit,
   groupBaseClass, groupAddClass, groupButtonBaseClass, groupButtonAddClass,
   inputBaseClass, inputAddClass, buttonBaseClass, buttonAddClass,
   glyphBaseClass, glyphAddClass,
 }) => {
-  const refs = {};
+  let inputRef;
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const _e = Object.assign({}, e, {
+      target: inputRef,
+    });
+    onSubmit(_e);
+  };
+
   const _onSubmit = autoClear ? e => {
-    onSubmit(e);
-    refs.inputNode.value = '';
-  } : onSubmit;
+    handleSubmit(e);
+    inputRef.value = '';
+  } : handleSubmit;
+
   const _glyphBaseClass = (glyphBaseClass && (glyphBaseClass + '-' + glyph)) ||
     `fa fa-${glyph}`;
 
@@ -30,8 +40,7 @@ const GlyphInputText = ({
         autoFocus={autoFocus}
         defaultValue={defaultValue}
         ref={node => {
-          exposeInputNode(node);
-          refs.inputNode = node;
+          inputRef = node;
         }}
       />
       <span className={classnames(groupButtonBaseClass, groupButtonAddClass)}>
@@ -48,7 +57,6 @@ const GlyphInputText = ({
 
 GlyphInputText.propTypes = {
   glyph: PropTypes.string.isRequired,
-  exposeInputNode: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
