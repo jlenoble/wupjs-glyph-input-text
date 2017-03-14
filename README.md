@@ -7,9 +7,9 @@ Generic input[type="text"] using React
 * [Required properties](#required-properties)
   * [glyph](#glyph)
   * [onSubmit](#onsubmit)
-  * [exposeInputNode](#exposeinputnode)
 * [Theming GlyphInputText](#theming-glyphinputtext)
 * [Overriding GlyphInputText defaults](#overriding-glyphinputtext-defaults)
+* [Special props](#special-props)
 
 ## Usage
 
@@ -20,18 +20,13 @@ import React from 'react';
 import {render} from 'react-dom';
 import GlyphInputText from './glyph-input-text';
 
-let inputNode;
-
 render(<div>
   <h5>GlyphInputText</h5>
   <GlyphInputText
     glyph="save"
     onSubmit={e => {
       e.preventDefault();
-      console.log(inputNode.value);
-    }}
-    exposeInputNode={node => {
-      inputNode = node;
+      console.log(e.target.value);
     }}
     autoFocus
     autoClear
@@ -43,15 +38,11 @@ render(<div>
 
 ### `glyph`
 
-By default, `glyph` is the name of a character as defined by [Font Awesome](http://fontawesome.io/icons/). You may use it in combination with property `glyphBaseClass` to use a totally different character set. See [Overriding defaults](#overriding-glyphinputtext-defaults).
+By default, `glyph` is the name of a character as defined by [Font Awesome](http://fontawesome.io/icons/). You may use it in combination with property `glyphBaseClass` to use a totally different character set. See [Overriding `GlyphInputText` defaults](#overriding-glyphinputtext-defaults).
 
 ### `onSubmit`
 
-`onSubmit` property must be a function which will be called whenever the input box content is submitted. As shown in the [Usage](#usage) example, it takes as input the 'submit' event, whose default must be generally inhibited to prevent from a page reload. To access the input text, you must first expose the input node using the third required prop:
-
-### `exposeInputNode`
-
-`exposeInputNode` is a callback that sets a reference to the input node, allowing the calling parent to work with its child data. See [Usage](#usage) for an example.
+`onSubmit` property must be a function which will be called whenever the input box content is submitted. As shown in the [Usage](#usage) example, it takes as input a 'submit' event. Internally, its `preventDefault` is called so that the component never provokes a page reload. Moreover the event is not exactly the event that is automatically generated on submit (which is related to the wrapping form) but a mixin of that event with `{target: inputNode}`, so that you can access the underlying data by using `e.target.value`.
 
 ## Theming `GlyphInputText`
 
@@ -74,6 +65,15 @@ There are 5 props provided to override the theming of the component:
 * `inputBaseClass`: Overrides Bootstrap4 for the input element
 * `buttonBaseClass`: Overrides Bootstrap4 for the button element
 * `glyphBaseClass`: Overrides FontAwesome for the symbol within the button.
+
+## Special props
+
+* `placeholder`: Placeholder text within the underlying text input
+* `autoFocus`: Have the underlying input autofocus
+* `autoClear`: Have the underlying input autoclear on submit
+* `defaultValue`: Initial value to appear in the text input (not a placeholder, but an actual value that will be submitted by default)
+* `onFocus`: A function called when the underlying input gets focus
+* `onBlur`: A function called when the underlying input loses focus
 
 ## License
 
