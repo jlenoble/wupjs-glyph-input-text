@@ -71,6 +71,7 @@ There are 5 props provided to override the theming of the component:
 * `placeholder`: Placeholder text within the underlying text input
 * `autoFocus`: Have the underlying input autofocus
 * `autoClear`: Have the underlying input autoclear on submit
+* `inhibitBlurOnSubmit`: As it says: Submitting always blurs *first* if not inhibited and this is probably unwanted behavior if bluring somehow destroys/detaches the widget
 * `defaultValue`: Initial value to appear in the text input (not a placeholder, but an actual value that will be submitted by default)
 * `onFocus`: A function called when the underlying input gets focus
 * `onBlur`: A function called when the underlying input loses focus
