@@ -9,7 +9,14 @@ render(<div>
     onSubmit={e => {
       console.log(e.target.value);
     }}
+    onFocus={() => {
+      console.log('Getting focus');
+    }}
+    onBlur={() => {
+      console.log('Loosing focus');
+    }}
     autoFocus
     autoClear
+    inhibitBlurOnSubmit
   />
 </div>, document.getElementById('app'));

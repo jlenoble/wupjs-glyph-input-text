@@ -4,12 +4,16 @@ import classnames from 'classnames';
 
 const GlyphInputText = ({
   glyph, placeholder, autoFocus, autoClear, defaultValue,
-  onFocus, onBlur, onSubmit,
+  onFocus, onBlur, onSubmit, inhibitBlurOnSubmit,
   groupBaseClass, groupAddClass, groupButtonBaseClass, groupButtonAddClass,
   inputBaseClass, inputAddClass, buttonBaseClass, buttonAddClass,
   glyphBaseClass, glyphAddClass,
 }) => {
   let inputRef;
+  let mouseIsDown = false;
+  let _onMouseDown;
+  let _onMouseUp;
+  let _onBlur = onBlur;
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -18,6 +22,22 @@ const GlyphInputText = ({
     });
     onSubmit(_e);
   };
+
+  if (onBlur && inhibitBlurOnSubmit) {
+    _onMouseDown = () => {
+      mouseIsDown = true;
+    };
+
+    _onMouseUp = () => {
+      mouseIsDown = false;
+    };
+
+    _onBlur = e => {
+      if (!mouseIsDown) {
+        return onBlur(e);
+      }
+    };
+  }
 
   const _onSubmit = autoClear ? e => {
     handleSubmit(e);
@@ -30,8 +50,10 @@ const GlyphInputText = ({
   return (
     <form
       className={classnames(groupBaseClass, groupAddClass)}
+      onMouseDown={_onMouseDown}
+      onMouseUp={_onMouseUp}
       onFocus={onFocus}
-      onBlur={onBlur}
+      onBlur={_onBlur}
       onSubmit={_onSubmit}
     >
       <input
@@ -69,6 +91,7 @@ GlyphInputText.propTypes = {
   groupAddClass: PropTypes.string,
   groupButtonBaseClass: PropTypes.string,
   groupButtonAddClass: PropTypes.string,
+  inhibitBlurOnSubmit: PropTypes.bool,
   inputBaseClass: PropTypes.string,
   inputAddClass: PropTypes.string,
   buttonBaseClass: PropTypes.string,
@@ -82,6 +105,7 @@ GlyphInputText.defaultProps = {
   inputBaseClass: 'form-control',
   groupButtonBaseClass: 'input-group-btn',
   buttonBaseClass: 'btn btn-secondary',
+  inhibitBlurOnSubmit: false,
 };
 
 export default GlyphInputText;
