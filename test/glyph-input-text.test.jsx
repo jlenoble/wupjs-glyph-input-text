@@ -1,9 +1,20 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
 import {expect} from 'chai';
+import dom from 'jsdom-global';
 import GlyphInputText from '../src/glyph-input-text';
 
 describe('Testing <GlyphInputText/>', function () {
+  this.timeout(5000); // eslint-disable-line no-invalid-this
+
+  beforeEach(function () {
+    this.cleanup = dom(); // eslint-disable-line no-invalid-this
+  });
+
+  afterEach(function () {
+    this.cleanup(); // eslint-disable-line no-invalid-this
+  });
+
   it(`<GlyphInputText/> can be instantiated with no props`, function () {
     shallow(
       <GlyphInputText/>
@@ -196,24 +207,24 @@ describe('Testing <GlyphInputText/>', function () {
 
     wrapper.simulate('submit', e);
     expect(text).to.equal('');
-    wrapper.find('input').node.value = 'new value';
+    wrapper.find('input').getDOMNode().value = 'new value';
     expect(text).to.equal('');
     wrapper.simulate('submit', e);
     expect(text).to.equal('new value');
   });
 
   it(`<GlyphInputText/> with no onSubmit prop throws an error on submit`,
-  function () {
-    const wrapper = mount(
-      <GlyphInputText
-        glyph="pencil"
-      />
-    );
+    function () {
+      const wrapper = mount(
+        <GlyphInputText
+          glyph="pencil"
+        />
+      );
 
-    const e = {
-      preventDefault () {},
-    };
+      const e = {
+        preventDefault () {},
+      };
 
-    expect(wrapper.simulate.bind(wrapper, 'submit', e)).to.throw(TypeError);
-  });
+      expect(wrapper.simulate.bind(wrapper, 'submit', e)).to.throw(TypeError);
+    });
 });

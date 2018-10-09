@@ -1,15 +1,9 @@
 import gulp from 'gulp';
-import mocha from 'gulp-mocha-phantomjs';
+import mocha from 'gulp-mocha';
 
-import './build';
-import './bundle';
-
-export const test = done => {
-  return gulp.src('test/runner.html')
-    .pipe(mocha())
-    .on('end', () => {
-      done();
-    });
+export const test = () => {
+  return gulp.src('build/test/wupjs-glyph-input-text.test.js')
+    .pipe(mocha());
 };
 
-gulp.task('test', gulp.series('bundle', test));
+gulp.task('test', test);
